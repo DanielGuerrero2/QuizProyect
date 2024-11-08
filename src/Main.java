@@ -5,7 +5,7 @@ import java.util.Scanner;
  */
 public class Main {
     // clase para construir preguntas
-    static class Question {
+    public static class Question {
         String question;
         int correctAnswer;
         String[] options;
@@ -13,10 +13,10 @@ public class Main {
          * Constructor para inicializar una pregunta.
          *
          * @param question      La pregunta en formato de texto.
-         * @param correctAnswer El la respuesta correcta.
+         * @param correctAnswer El la respuesta correcta
          * @param options       Las opciones de respuesta.
          */
-        // constructor
+
         Question(String question, int correctAnswer, String[] options) {
             this.question = question;
             this.correctAnswer = correctAnswer;
@@ -28,12 +28,9 @@ public class Main {
          * @param answer El numero de la respuesta proporcionada por el usuario.
          * @return true si la respuesta es correcta, false en caso contrario.
          */
-
-        // metodo para verificar si la respuesta es correcta
         boolean isCorrect(int answer) {
             return correctAnswer == answer;
         }
-
 
         /**
          * Muestra la pregunta y sus opciones en la consola.
@@ -80,6 +77,7 @@ public class Main {
         System.out.println("2. Matematicas");
         System.out.println("3. Historia");
         System.out.print("Ingresa tu respuesta: ");
+
         int category = scanner.nextInt();
         while (category < 1 || category > 3) {
             System.out.println("Categoria invalida, intenta de nuevo");
@@ -97,9 +95,6 @@ public class Main {
                 buildQuiz(historyQuestions);
                 break;
         }
-
-
-
     }
     /**
      * Construye y ejecuta el quiz basado en el array de preguntas proporcionado.
@@ -113,11 +108,10 @@ public class Main {
             question.display();
             System.out.print("Ingresa tu respuesta: ");
             int answer = scanner.nextInt();
-
             if (question.isCorrect(answer)) {
                 correctAnswers++;
             }
         }
-        System.out.println("Obtuviste" + correctAnswers + "preguntas correctas de " + questions.length + "preguntas");
+        System.out.println("Obtuviste un puntaje de " + correctAnswers + " de " + questions.length + " preguntas");
     }
 }
