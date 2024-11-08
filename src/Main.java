@@ -1,25 +1,43 @@
 import java.util.Scanner;
 
+/**
+ * Clase principal que contiene el método main y la lógica del quiz.
+ */
 public class Main {
     // clase para construir preguntas
     static class Question {
         String question;
         int correctAnswer;
         String[] options;
-
+        /**
+         * Constructor para inicializar una pregunta.
+         *
+         * @param question      La pregunta en formato de texto.
+         * @param correctAnswer El la respuesta correcta.
+         * @param options       Las opciones de respuesta.
+         */
         // constructor
         Question(String question, int correctAnswer, String[] options) {
             this.question = question;
             this.correctAnswer = correctAnswer;
             this.options = options;
         }
+        /**
+         * Verifica si la respuesta proporcionada es correcta.
+         *
+         * @param answer El numero de la respuesta proporcionada por el usuario.
+         * @return true si la respuesta es correcta, false en caso contrario.
+         */
 
         // metodo para verificar si la respuesta es correcta
         boolean isCorrect(int answer) {
             return correctAnswer == answer;
         }
 
-        // metodo para mostrar la pregunta
+
+        /**
+         * Muestra la pregunta y sus opciones en la consola.
+         */
         void display() {
             System.out.println(question);
             // mostrar las opciones de la pregunta
@@ -28,6 +46,9 @@ public class Main {
             }
         }
     }
+    /**
+     * Método principal que ejecuta el programa.
+     */
 
     public static void main(String[] args) {
         // preguntas de geografia
@@ -80,7 +101,11 @@ public class Main {
 
 
     }
-    //metodo para construir el quiz segun el array de preguntas
+    /**
+     * Construye y ejecuta el quiz basado en el array de preguntas proporcionado.
+     *
+     * @param questions Array de preguntas a utilizar en el quiz.
+     */
     public  static void buildQuiz(Question [] questions){
         Scanner scanner = new Scanner(System.in);
         int correctAnswers = 0;
