@@ -46,9 +46,9 @@ public class Main {
             new Question("Cuanto es  5 + 5?",  1, new String[] { "10", "11", "12", "13" }),
         };
 
-        System.out.println("Geography Quiz");
+        System.out.println("Quiz de Geografia");
         buildQuiz(questions);
-        System.out.println("Math Quiz");
+        System.out.println("Quiz de matematicas");
         buildQuiz(mathQuestions);
 
 
@@ -61,13 +61,13 @@ public class Main {
         int correctAnswers = 0;
         for (Question question : questions) {
             question.display();
-            System.out.print("Enter your answer: ");
+            System.out.print("Ingresa tu respuesta: ");
             int answer = scanner.nextInt();
 
             if (question.isCorrect(answer)) {
                 correctAnswers++;
             }
         }
-        System.out.println("You got " + correctAnswers + " correct answers out of " + questions.length + " questions.");
+        System.out.println("Obtuviste" + correctAnswers + "preguntas correctas de " + questions.length + "preguntas");
     }
 }
