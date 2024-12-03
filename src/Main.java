@@ -11,7 +11,6 @@ public class Main {
     private final static int deportes=4;
     private final static int matematicas =5;
     private final static int backMainScreen=1;
-    private final static int endGame =2;
     public static void main(String[] args) {
         // Ejecutar el quiz
         mainScreen();
@@ -68,8 +67,10 @@ public class Main {
                 printHangman(intentosRestantes);
                 intentosRestantes--;
             }
+
         }
         // Si el ciclo termina y la palabra no contiene guiones bajos, el usuario ganó
+        //Nuestro array de caracteres lo convertimos en un string para poder ver si contiene guiones (Que se refiere a los espacios en blanco)
         if (!new String(progreso).contains("_")) {
             System.out.println("\n¡Felicidades! Adivinaste la palabra: " + palabra);
         } else {
@@ -81,18 +82,23 @@ public class Main {
             System.out.print("Selecciona una opción: ");
             int opcion = scanner.nextInt();
             // Verificar que la opción sea válida
+            // si no es hangman( o sea el numero 1) y si tampoco es quiz (en este caso 2)
             while (opcion<hangman|| opcion>quiz) {
                 System.out.println("Opción inválida. Intenta de nuevo.");
                 System.out.print("Selecciona una opción: ");
                 opcion = scanner.nextInt();
             }
-            if (opcion == 1) {
+            if (opcion == backMainScreen) {
                 mainScreen();
             }
             System.out.println("Vuelve pronto.");
             scanner.close();
         }
     }
+    /**
+     * Método que imprime el muñeco según la cantitdad de  intentos actuales.
+     * @param attemps numero de intentos.
+     */
 
     public static void printHangman(int attemps) {
         switch (attemps) {
@@ -252,6 +258,9 @@ public class Main {
      */
     // Metodo para seleccionar  el quiz
     public static void selectQuiz(){
+        //Lo que se muestra a continuación son 10 serie de preguntas por cada tema
+        //Cada pregunta tiene un array bidimensional que contiene un array  con posibles respuestas por cada pregunta
+        //Luego finalmente es el array con las respuestas correctas de esas 10 preguntas
         // Preguntas de Historia
         String[] preguntasHistoria = {
                 "¿En qué año comenzó la Segunda Guerra Mundial?",
@@ -391,8 +400,8 @@ public class Main {
         System.out.println("5. Matemáticas");
         System.out.print("Ingresa el número de la categoría: ");
         int categoria = scanner.nextInt();
-        // Verificar que la categoría sea válida
-        while (categoria < 1 || categoria > 5) {
+        // Verificar que la categoría este dentro de nuestras opciones
+        while (categoria < historia|| categoria > matematicas) {
             System.out.println("Categoría inválida. Intenta de nuevo.");
             System.out.print("Ingresa el número de la categoría: ");
             categoria = scanner.nextInt();
