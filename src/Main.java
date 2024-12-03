@@ -1,6 +1,17 @@
 import java.util.Arrays;
 import java.util.Scanner;
 public class Main {
+    //Variables privadas
+    private final static int hangman =1;
+    private final static int quiz =2;
+    //quiz options
+    private  final static int  historia=1;
+    private final static int ciencia= 2;
+    private final static int geografia=3;
+    private final static int deportes=4;
+    private final static int matematicas =5;
+    private final static int backMainScreen=1;
+    private final static int endGame =2;
     public static void main(String[] args) {
         // Ejecutar el quiz
         mainScreen();
@@ -35,6 +46,7 @@ public class Main {
                 continue;
             }
             // Verificar si la letra ya fue usada
+            //Devuelve menos -1 cuando la letra no ha sido usada
             if (letrasUsadas.indexOf(letra) != -1) {
                 System.out.println("Ya usaste esta letra. Intenta con otra.");
                 intentosRestantes--;
@@ -69,7 +81,7 @@ public class Main {
             System.out.print("Selecciona una opción: ");
             int opcion = scanner.nextInt();
             // Verificar que la opción sea válida
-            while (opcion != 1 && opcion != 2) {
+            while (opcion<hangman|| opcion>quiz) {
                 System.out.println("Opción inválida. Intenta de nuevo.");
                 System.out.print("Selecciona una opción: ");
                 opcion = scanner.nextInt();
@@ -158,6 +170,7 @@ public class Main {
     public static void runQuiz(String[] preguntas, String[][] opciones, int[] respuestasCorrectas) {
         Scanner scanner = new Scanner(System.in);
         int puntaje = 0;
+
         for (int i = 0; i < preguntas.length; i++) {
             System.out.println((i + 1) + ". " + preguntas[i]);
             for (int j = 0; j < opciones[i].length; j++) {
@@ -173,21 +186,27 @@ public class Main {
                 System.out.println("Incorrecto. La respuesta correcta es: " + opciones[i][respuestasCorrectas[i]] + "\n");
             }
         }
+        System.out.println("***************************");
         System.out.println("Tu puntaje final es: " + puntaje + " de " + preguntas.length);
         System.out.println("Gracias por jugar.");
+        System.out.println("***************************");
         backToMain();
     }
     // Método para mostrar la pantalla principal
     public static void mainScreen() {
+
         Scanner scanner = new Scanner(System.in);
         String[] words = {"murcielago", "computadora"};
         //seleccionar una palabra aleatoria para el juego del ahorcado
         int randomWord = (int) (Math.random() * words.length);
-        System.out.println("Bienvenido a la aplicación");
-        System.out.println("¿Qué deseas hacer?");
-        System.out.println("1. Jugar Hangman");
-        System.out.println("2. Jugar Quiz");
+        System.out.println("***************************");
+        System.out.println("*Bienvenido a la aplicación");
+        System.out.println("* ¿Qué deseas hacer? ");
+        System.out.println("* 1. Jugar Hangman ");
+        System.out.println("* 2. Jugar Quiz ");
+        System.out.println("***************************");
         System.out.print("Selecciona una opción: ");
+
         int opcion = scanner.nextInt();
         // Verificar que la opción sea válida
         while (opcion != 1 && opcion != 2) {
@@ -222,6 +241,7 @@ public class Main {
             System.out.print("Selecciona una opción: ");
             opcion = scanner.nextInt();
         }
+        // si la opción es 1 entonces se vuelve a la pantalla de inicio
         if (opcion == 1) {
             mainScreen();
         }
@@ -379,19 +399,19 @@ public class Main {
         }
         // Ejecutar el quiz de la categoría seleccionada
         switch (categoria) {
-            case 1:
+            case historia:
                 runQuiz(preguntasHistoria, opcionesHistoria, respuestasCorrectasHistoria);
                 break;
-            case 2:
+            case ciencia:
                 runQuiz(preguntasCiencia, opcionesCiencia, respuestasCorrectasCiencia);
                 break;
-            case 3:
+            case geografia:
                 runQuiz(preguntasGeografia, opcionesGeografia, respuestasCorrectasGeografia);
                 break;
-            case 4:
+            case deportes:
                 runQuiz(preguntasDeportes, opcionesDeportes, respuestasDeportes);
                 break;
-            case 5:
+            case matematicas:
                 runQuiz(preguntasMatematicas, opcionesMatematicas, respuestasMatematicas);
                 break;
             default:
