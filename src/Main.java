@@ -5,6 +5,10 @@ public class Main {
         // Ejecutar el quiz
         mainScreen();
     }
+    /**
+     * Método que ejecuta el juego del ahorcado.
+     * @param palabra La palabra que el usuario debe adivinar.
+     */
     public static void hangman(String palabra) {
         // Palabra a adivinar
         palabra = palabra.toUpperCase();
@@ -145,7 +149,12 @@ public class Main {
                 break;
         }
     }
-    // Método para ejecutar el quiz
+    /**
+     * Método que ejecuta un quiz con preguntas y opciones dadas.
+     * @param preguntas Array de preguntas.
+     * @param opciones Matriz de opciones para cada pregunta.
+     * @param respuestasCorrectas Array de índices de respuestas correctas.
+     */
     public static void runQuiz(String[] preguntas, String[][] opciones, int[] respuestasCorrectas) {
         Scanner scanner = new Scanner(System.in);
         int puntaje = 0;
@@ -218,6 +227,9 @@ public class Main {
         }
         System.out.println("Vuelve pronto.");
     }
+    /**
+        * Método que ejecuta un quiz con preguntas y opciones dadas.
+     */
     // Metodo para seleccionar  el quiz
     public static void selectQuiz(){
         // Preguntas de Historia
