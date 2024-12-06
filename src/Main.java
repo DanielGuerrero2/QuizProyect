@@ -1,32 +1,67 @@
-import java.util.Arrays;
 import java.util.Scanner;
 public class Main {
     //Variables privadas
-    private final static int hangman =1;
-    private final static int quiz =2;
+
     //quiz options
-    private  final static int  historia=1;
+    private  final static int historia=1;
     private final static int ciencia= 2;
     private final static int geografia=3;
     private final static int deportes=4;
     private final static int matematicas =5;
-    private final static int backMainScreen=1;
     public static void main(String[] args) {
-        // Ejecutar el quiz
+        // Ejecutar el pantalla principal1
         mainScreen();
+    }
+    // Método para mostrar la pantalla principal
+    public static void mainScreen() {
+        Scanner scanner = new Scanner(System.in);
+        String[] words = {"murcielago", "computadora"};
+        //seleccionar una palabra aleatoria para el juego del ahorcado
+        int randomWord = (int) (Math.random() * words.length);
+        System.out.println("***************************");
+        System.out.println("*Bienvenido a la aplicación");
+        System.out.println("* ¿Qué deseas hacer? ");
+        System.out.println("* 1. Jugar Hangman ");
+        System.out.println("* 2. Jugar Quiz ");
+        System.out.println("***************************");
+        System.out.print("Selecciona una opción: ");
+
+        int opcion = scanner.nextInt();
+        // Verificar que la opción sea válida
+        while (opcion != 1 && opcion != 2) {
+            System.out.println("Opción inválida. Intenta de nuevo.");
+            System.out.print("Selecciona una opción: ");
+            opcion = scanner.nextInt();
+        }
+        // Ejecutar el juego seleccionado
+        switch (opcion) {
+            case 1:
+                hangman(words[randomWord]);
+                break;
+            case 2:
+                selectQuiz();
+                break;
+            default:
+                break;
+        }
     }
     /**
      * Método que ejecuta el juego del ahorcado.
      * @param palabra La palabra que el usuario debe adivinar.
      */
     public static void hangman(String palabra) {
+
         // Palabra a adivinar
+        //convierte la palabra en mayúsculas independientemente de como se haya escrito
         palabra = palabra.toUpperCase();
         String letrasUsadas = ""; // Aquí almacenaremos las letras usadas
-        int intentosRestantes = 10;
+        int intentosRestantes = 6;
         char[] progreso = new char[palabra.length()];
         // Inicializar progreso con guiones bajos
-        Arrays.fill(progreso, '_');
+       // Arrays.fill(progreso, '_');
+        for (int i = 0; i < palabra.length(); i++) {
+             progreso[i] = '_';
+        }
         Scanner scanner = new Scanner(System.in);
         System.out.println("¡Bienvenido a Hangman!");
         System.out.println("Intenta adivinar la palabra.");
@@ -63,37 +98,20 @@ public class Main {
                     }
                 }
             } else {
-                System.out.println("Incorrecto. Pierdes un intento.");
-                printHangman(intentosRestantes);
                 intentosRestantes--;
+                printHangman(intentosRestantes);
+                System.out.println("Incorrecto. Pierdes un intento.");
             }
-
         }
         // Si el ciclo termina y la palabra no contiene guiones bajos, el usuario ganó
         //Nuestro array de caracteres lo convertimos en un string para poder ver si contiene guiones (Que se refiere a los espacios en blanco)
         if (!new String(progreso).contains("_")) {
             System.out.println("\n¡Felicidades! Adivinaste la palabra: " + palabra);
         } else {
-            // Si el ciclo termina y la palabra contiene guiones bajos, el usuario perdió
-            System.out.println("\nLo siento, has perdido. La palabra era: " + palabra);
-           System.out.println("Quieres volver al inicio?");
-            System.out.println("1. Si");
-            System.out.println("2. No");
-            System.out.print("Selecciona una opción: ");
-            int opcion = scanner.nextInt();
-            // Verificar que la opción sea válida
-            // si no es hangman( o sea el numero 1) y si tampoco es quiz (en este caso 2)
-            while (opcion<hangman|| opcion>quiz) {
-                System.out.println("Opción inválida. Intenta de nuevo.");
-                System.out.print("Selecciona una opción: ");
-                opcion = scanner.nextInt();
-            }
-            if (opcion == backMainScreen) {
-                mainScreen();
-            }
-            System.out.println("Vuelve pronto.");
-            scanner.close();
+            System.out.println("\n¡Oh no! Te has quedado sin intentos.");
+            System.out.println("La palabra era: " + palabra);
         }
+        backToMain();
     }
     /**
      * Método que imprime el muñeco según la cantitdad de  intentos actuales.
@@ -101,6 +119,7 @@ public class Main {
      */
 
     public static void printHangman(int attemps) {
+        //Este metodo lo explicara Evelyn
         switch (attemps) {
             case 0:
                 System.out.println("  +---+");
@@ -156,7 +175,7 @@ public class Main {
                 System.out.println("      |");
                 System.out.println("=========");
                 break;
-            case 6:
+            case  6:
                 System.out.println("  +---+");
                 System.out.println("  |   |");
                 System.out.println("      |");
@@ -165,6 +184,7 @@ public class Main {
                 System.out.println("      |");
                 System.out.println("=========");
                 break;
+
         }
     }
     /**
@@ -174,9 +194,52 @@ public class Main {
      * @param respuestasCorrectas Array de índices de respuestas correctas.
      */
     public static void runQuiz(String[] preguntas, String[][] opciones, int[] respuestasCorrectas) {
+        String[] incorrectQuestions = new String[preguntas.length];
         Scanner scanner = new Scanner(System.in);
         int puntaje = 0;
-
+        System.out.println("¡Bienvenido al Quiz!");
+        System.out.println("Deseas hacer 5 o 10 preguntas?");
+        System.out.println("1. 5 preguntas");
+        System.out.println("2. 10 preguntas");
+        System.out.print("Selecciona una opción: ");
+        int opcion = scanner.nextInt();
+        // Verificar que la opción sea válida
+        while (opcion != 1 && opcion != 2) {
+            System.out.println("Opción inválida. Intenta de nuevo.");
+            System.out.print("Selecciona una opción: ");
+            opcion = scanner.nextInt();
+        }
+           int limitQuestions= opcion==1?5:10;
+            String[] preguntasRandom={};
+            String[][]opcionesRandom={};
+            int[]newAnswers= new int [limitQuestions];
+        while (preguntasRandom.length < limitQuestions) {
+            int random = (int) (Math.random() * preguntas.length);
+            if (preguntasRandom.length == 0) {
+                preguntasRandom = new String[1];
+                opcionesRandom = new String[1][];
+                opcionesRandom[0] = opciones[random];
+                preguntasRandom[0] = preguntas[random];
+                newAnswers[0] = respuestasCorrectas[random];
+            } else {
+                boolean isRepeated =  findIndex(preguntasRandom, preguntas[random])!= -1;
+                newAnswers[preguntasRandom.length] = respuestasCorrectas[random];
+                if (!isRepeated) {
+                    String[] temp = new String[preguntasRandom.length + 1];
+                    String[][] tempOptions = new String[opcionesRandom.length + 1][];
+                    for (int i = 0; i < preguntasRandom.length; i++) {
+                        temp[i] = preguntasRandom[i];
+                        tempOptions[i] = opcionesRandom[i];
+                    }
+                    temp[temp.length - 1] = preguntas[random];
+                    preguntasRandom = temp;
+                    tempOptions[tempOptions.length - 1] = opciones[random];
+                    opcionesRandom = tempOptions;
+                }
+            }
+        }
+        preguntas=preguntasRandom;
+        opciones=opcionesRandom;
         for (int i = 0; i < preguntas.length; i++) {
             System.out.println((i + 1) + ". " + preguntas[i]);
             for (int j = 0; j < opciones[i].length; j++) {
@@ -185,53 +248,31 @@ public class Main {
             System.out.print("Ingresa el número de tu respuesta: ");
             int respuestaUsuario = scanner.nextInt();
 
-            if (respuestaUsuario == respuestasCorrectas[i]) {
+            if (respuestaUsuario == newAnswers[i]) {
                 System.out.println("¡Correcto!\n");
                 puntaje++;
             } else {
-                System.out.println("Incorrecto. La respuesta correcta es: " + opciones[i][respuestasCorrectas[i]] + "\n");
+                incorrectQuestions[i] = preguntas[i];
+                System.out.println("Incorrecto. La respuesta correcta es: " + opciones[i][newAnswers[i]] + "\n");
             }
+
         }
         System.out.println("***************************");
         System.out.println("Tu puntaje final es: " + puntaje + " de " + preguntas.length);
+        System.out.println("***************************");
+        System.out.println("Preguntas incorrectas:");
+
+        for (String incorrectQuestion : incorrectQuestions) {
+            if (incorrectQuestion != null) {
+                System.out.println(incorrectQuestion);
+            }
+        }
+        System.out.println("***************************");
         System.out.println("Gracias por jugar.");
         System.out.println("***************************");
         backToMain();
     }
-    // Método para mostrar la pantalla principal
-    public static void mainScreen() {
 
-        Scanner scanner = new Scanner(System.in);
-        String[] words = {"murcielago", "computadora"};
-        //seleccionar una palabra aleatoria para el juego del ahorcado
-        int randomWord = (int) (Math.random() * words.length);
-        System.out.println("***************************");
-        System.out.println("*Bienvenido a la aplicación");
-        System.out.println("* ¿Qué deseas hacer? ");
-        System.out.println("* 1. Jugar Hangman ");
-        System.out.println("* 2. Jugar Quiz ");
-        System.out.println("***************************");
-        System.out.print("Selecciona una opción: ");
-
-        int opcion = scanner.nextInt();
-        // Verificar que la opción sea válida
-        while (opcion != 1 && opcion != 2) {
-            System.out.println("Opción inválida. Intenta de nuevo.");
-            System.out.print("Selecciona una opción: ");
-            opcion = scanner.nextInt();
-        }
-        // Ejecutar el juego seleccionado
-        switch (opcion) {
-            case 1:
-                hangman(words[randomWord]);
-                break;
-            case 2:
-                selectQuiz();
-                break;
-            default:
-                break;
-        }
-    }
     // Método para volver al menú principal
     public static  void backToMain(){
         Scanner scanner = new Scanner(System.in);
@@ -365,6 +406,7 @@ public class Main {
                 {"Karate", "Taekwondo", "Judo", "Kung-Fu"} // Artes marciales
         };
         int[] respuestasDeportes = {0, 0, 0, 0, 1, 0, 0, 1, 0, 2};
+
 // Preguntas de Matemáticas
         String[] preguntasMatematicas = {
                 "¿Cuál es el resultado de 12 + 7?",
@@ -379,7 +421,7 @@ public class Main {
                 "¿Qué es una fracción equivalente?"
         };
         String[][] opcionesMatematicas = {
-                {"19", "20", "21", "22"}, // 12 + 7
+                {"19", "20", "21", "22"}, // 12 + 7 // este es el indice numero 0
                 {"Área", "Radio", "Diámetro", "Circunferencia"}, // Perímetro círculo
                 {"6", "5", "7", "8"}, // 15 - 9
                 {"15", "20", "25", "30"}, // 5 al cuadrado
@@ -426,5 +468,13 @@ public class Main {
             default:
                 break;
     }
+    }
+    public  static int  findIndex(String[] array, String value){
+        for (int i = 0; i < array.length; i++) {
+            if (array[i].equals(value)) {
+                return i;
+            }
+        }
+        return -1;
     }
 }
